@@ -1,0 +1,441 @@
+\ProvidesPackage{OfficialGazette}
+% Diafores plirofories egkatastasis
+
+% TexMaker setting
+% pdflatex -shell-escape -synctex=1 -interaction=nonstopmode %.tex
+
+% Gia na mporoume na grafoume polles glwsses
+% Kai to arxeio na einai antistoixa apothikebmeno
+% sudo apt-get install texlive-lang-greek
+\usepackage[english,greek]{babel}
+\usepackage[utf8x]{inputenc}
+
+% Gia tin ektipwsi tou barcode
+% sudo apt-get install texlive-pstricks
+\usepackage[pdf]{pstricks}
+\usepackage{pst-barcode}
+  
+% Gia ektipwsi sto katw meros
+\newenvironment{bottompar}{\par\vspace*{\fill}}{\clearpage}
+
+% Gia na mporoume na enswmatwsoume eikones
+\usepackage{graphicx}
+
+% Gia ipogrammisi
+\usepackage[normalem]{ulem} 
+
+% Gia to klassiko distilo
+\usepackage{multicol}
+
+% Gia kalitero if-then-else
+\usepackage{ifthen}
+
+% Gia na exoume pio xontri grammi
+\makeatletter
+  \def\vhrulefill#1{\leavevmode\leaders\hrule\@height#1\hfill \kern\z@}
+\makeatother
+
+\newcommand{\printDate}[4] {
+  \noindent\ifthenelse{\equal{#1}{}}{
+    \ifthenelse{#3 =  1}{#2 Ιανουαρίου #4}{}
+    \ifthenelse{#3 =  2}{#2 Φεβρουαρίου #4}{}
+    \ifthenelse{#3 =  3}{#2 Μαρτίου #4}{}
+    \ifthenelse{#3 =  4}{#2 Απριλίου #4}{}
+    \ifthenelse{#3 =  5}{#2 Μαΐου #4}{}
+    \ifthenelse{#3 =  6}{#2 Ιουνίου #4}{}
+    \ifthenelse{#3 =  7}{#2 Ιουλίου #4}{}
+    \ifthenelse{#3 =  8}{#2 Αυγούστου #4}{}
+    \ifthenelse{#3 =  9}{#2 Σεπτεμβρίου #4}{}
+    \ifthenelse{#3 = 10}{#2 Οκτωβρίου #4}{}
+    \ifthenelse{#3 = 11}{#2 Νοεμβρίου #4}{}
+    \ifthenelse{#3 = 12}{#2 Δεκεμβρίου #4}{}
+  }
+  {
+    \ifthenelse{#3 =  1}{#1, #2 Ιανουαρίου #4}{}
+    \ifthenelse{#3 =  2}{#1, #2 Φεβρουαρίου #4}{}
+    \ifthenelse{#3 =  3}{#1, #2 Μαρτίου #4}{}
+    \ifthenelse{#3 =  4}{#1, #2 Απριλίου #4}{}
+    \ifthenelse{#3 =  5}{#1, #2 Μαΐου #4}{}
+    \ifthenelse{#3 =  6}{#1, #2 Ιουνίου #4}{}
+    \ifthenelse{#3 =  7}{#1, #2 Ιουλίου #4}{}
+    \ifthenelse{#3 =  8}{#1, #2 Αυγούστου #4}{}
+    \ifthenelse{#3 =  9}{#1, #2 Σεπτεμβρίου #4}{}
+    \ifthenelse{#3 = 10}{#1, #2 Οκτωβρίου #4}{}
+    \ifthenelse{#3 = 11}{#1, #2 Νοεμβρίου #4}{}
+    \ifthenelse{#3 = 12}{#1, #2 Δεκεμβρίου #4}{}
+  }
+}
+
+\newcommand{\InitOfficialGazette}[7]{
+  % 1: Tefxos
+  % 2: Imera
+  % 3: Minas
+  % 4: Etos
+  % 5: Arithmos fillou
+  % 6: Arithmos selidas
+  % 7: Ilektroniki sfragida
+  \newcommand{\OFtype}          {#1}
+  \newcommand{\OFdate}          {#2}
+  \newcommand{\OFmonth}         {#3}
+  \newcommand{\OFyear}          {#4}
+  \newcommand{\OFnumber}        {#5}
+  \newcommand{\OFpage}          {#6}
+  \newcommand{\OFsignature}     {#7}
+  
+  \ifthenelse{\OFmonth =  1}{\newcommand{\OFmonthBig}{Ιανουαρίου}}{}
+  \ifthenelse{\OFmonth =  2}{\newcommand{\OFmonthBig}{Φεβρουαρίου}}{}
+  \ifthenelse{\OFmonth =  3}{\newcommand{\OFmonthBig}{Μαρτίου}}{}
+  \ifthenelse{\OFmonth =  4}{\newcommand{\OFmonthBig}{Απριλίου}}{}
+  \ifthenelse{\OFmonth =  5}{\newcommand{\OFmonthBig}{Μαΐου}}{}
+  \ifthenelse{\OFmonth =  6}{\newcommand{\OFmonthBig}{Ιουνίου}}{}
+  \ifthenelse{\OFmonth =  7}{\newcommand{\OFmonthBig}{Ιουλίου}}{}
+  \ifthenelse{\OFmonth =  8}{\newcommand{\OFmonthBig}{Αυγούστου}}{}
+  \ifthenelse{\OFmonth =  9}{\newcommand{\OFmonthBig}{Σεπτεμβρίου}}{}
+  \ifthenelse{\OFmonth = 10}{\newcommand{\OFmonthBig}{Οκτωβρίου}}{}
+  \ifthenelse{\OFmonth = 11}{\newcommand{\OFmonthBig}{Νοεμβρίου}}{}
+  \ifthenelse{\OFmonth = 12}{\newcommand{\OFmonthBig}{Δεκεμβρίου}}{}
+}
+
+% Gia na mpoun oi arithmoi selidwn panw deksia
+\usepackage{fancyhdr}
+\makeatletter
+\renewcommand*{\ps@plain}{%
+  \let\@mkboth\@gobbletwo
+  \let\@oddfoot\@empty
+  \def\@oddhead{%
+    \reset@font
+        ΕΦΗΜΕΡΙΣ ΤΗΣ ΚΥΒΕΡΝΗΣΕΩΣ (ΤΕΥΧΟΣ \OFtype)
+    \hfil               % Right aligned
+    \thepage
+  }%
+  \let\@mkboth\@gobbletwo
+  \let\@evenfoot\@empty
+  \def\@evenhead{%
+    \reset@font
+    \thepage
+    \hfil               % Right aligned
+    ΕΦΗΜΕΡΙΣ ΤΗΣ ΚΥΒΕΡΝΗΣΕΩΣ (ΤΕΥΧΟΣ \OFtype)
+  }%
+}
+\makeatother
+\pagestyle{plain}
+
+% Gia diorthwsi perithoriwn
+% To "twoside" sto document class, mas epitrepei na
+% exoume deksies kai aristeres selides
+\usepackage[top=2.5cm, bottom=2.5cm, inner=2.5cm, outer=1cm]{geometry}
+
+% Gia na mporoume na orisoume sigkekrimeno spacing
+\usepackage{setspace}
+
+% Gia proepilogmeni grammatoseira
+% TODO: Den doulebei kala i Arial
+% \renewcommand{\familydefault}{\sfdefault}
+\usepackage{enumitem}
+\setlist{nolistsep}
+\setlist[1]{leftmargin=0cm, noitemsep, topsep=0pt, itemindent=1.0cm, labelwidth=\itemindent, labelsep=0cm, align=right}
+\setlist[2]{leftmargin=0cm, noitemsep, topsep=0pt, itemindent=1.5cm, labelwidth=\itemindent, labelsep=0cm, align=right}
+\setlist[3]{leftmargin=0cm, noitemsep, topsep=0pt, itemindent=2.0cm, labelwidth=\itemindent, labelsep=0cm, align=right}
+
+% Gia na girisei olo to keimeno se Arial
+% sudo apt-get install texlive-extra-utils
+% getnonfreefonts-sys -a
+
+% \usepackage{uarial}
+% \renewcommand{\familydefault}{\sfdefault}
+
+% \selectlanguage{greek}                        % Gia epilogi glwssas
+
+\renewcommand{\maketitle}[0]{
+        \selectlanguage{greek}
+        \noindent\begin{center}
+                % Mexri na brethei na mpainei i eikona xwris problima
+                % Δάφνες \vspace{2cm}
+                \includegraphics[natwidth=600, natheight=600, height=3cm, width=3cm]{dafnes.jpg}
+                \vspace{1cm}
+        
+                \begin{onehalfspacing}
+                                {\Huge \textbf{ΕΦΗΜΕΡΙΣ ΤΗΣ ΚΥΒΕΡΝΗΣΕΩΣ}} \\
+                                \vspace{5mm}
+                                {\Large ΤΗΣ ΕΛΛΗΝΙΚΗΣ ΔΗΜΟΚΡΑΤΙΑΣ}
+                \end{onehalfspacing}
+        \end{center}
+
+        \noindent\begin{minipage}{0.49\textwidth}
+                \begin{flushleft}
+                \textbf{\large ΤΕΥΧΟΣ \OFtype}
+                \end{flushleft}
+        \end{minipage}
+        \begin{minipage}{0.5\textwidth}
+                \begin{flushright}
+                    \textbf{\large Αρ. Φύλλου \OFnumber}
+                \end{flushright}
+        \end{minipage}
+        
+        \noindent\hrulefill
+        \begin{flushright}
+            {\large \OFdate\ \OFmonthBig\ \OFyear}
+        \end{flushright}
+        
+        \setcounter{page}{\OFpage}
+}
+
+\newcommand{\printOfficialGazetteFooter}[0]{
+        \selectlanguage{greek}
+        \begin{bottompar}
+                \noindent\hrulefill
+        
+                \vspace{5mm}
+                \noindent\begin{minipage}{2.5cm}
+                        \begin{pspicture}(2.5cm,2.5cm)
+                          \psbarcode{\OFsignature.\OFnumber.\OFyear}{eclevel=H width=1.0 height=1.0}{qrcode}
+                        \end{pspicture}
+                \end{minipage}
+                \begin{minipage}{12cm}
+                        \begin{flushright}\begin{small}
+                            \textbf{ΑΠΟ ΤΟ ΕΘΝΙΚΟ ΤΥΠΟΓΡΑΦΕΙΟ}
+        
+                            ΚΑΠΟΔΙΣΤΡΙΟΥ 34 *
+                            ΑΘΗΝΑ 104 32
+                            
+                            ΤΗΛ. 210 52 79 000 *
+                            FAX. 210 52 21 004
+                        \end{small}\end{flushright}
+                \end{minipage}
+                \end{bottompar}
+}
+
+% Gia allagi xrwmatos
+\usepackage{color}
+
+% Gia ipostiriksi periexomenwn
+% Ipostirizetai apo to Latex
+\renewcommand{\contentsname}{Περιεχόμενα}
+
+% Based on http://tex.stackexchange.com/questions/10188/table-of-contents-with-additional-description-of-entries
+\makeatletter
+% Basically the same as for `\l@section` etc, just `\@nodottedtocline` instead of `\@dottedtcline`:
+% \newcommand*\l@chapterinfo{\@nodottedtocline{0}{0.0em}{1.5em}} % Den iparxei chapter sto document{article}
+\newcommand*\l@sectioninfo{\@nodottedtocline{1}{0.0em}{1.5em}}          % Apo {1}{1.5em}{2.3em}
+\newcommand*\l@subsectioninfo{\@nodottedtocline{2}{1.5em}{2.3em}}       % Apo {2}{3.8em}{3.2em}
+\newcommand*\l@subsubsectioninfo{\@nodottedtocline{3}{7.0em}{4.1em}}
+\newcommand*\l@paragraphinfo{\@nodottedtocline{4}{10em}{5em}}
+\newcommand*\l@subparagraphinfo{\@nodottedtocline{5}{12em}{6em}}
+
+% Copied from the book class macro `\@dottedtocline`. Removed the dots and page number
+\def\@nodottedtocline#1#2#3#4#5{
+  \ifnum #1>\c@tocdepth \else
+    \vskip \z@ \@plus.2\p@
+    {\leftskip #2\relax \rightskip \@tocrmarg \parfillskip -\rightskip
+     \parindent #2\relax\@afterindenttrue
+     \interlinepenalty\@M
+     \leavevmode
+     \@tempdima #3\relax
+     \advance\leftskip \@tempdima \null\nobreak\hskip -\leftskip
+     {\textit{\small{#4}}}\nobreak
+     \leaders\hbox{$\m@th
+        \mkern \@dotsep mu\hbox{\,}\mkern \@dotsep
+        mu$}\hfill
+     \nobreak
+     \hb@xt@\@pnumwidth{\hfil\normalfont \normalcolor }
+     \par}
+  \fi}
+
+\makeatother
+
+\def\chapterinfo#1{%
+    \addcontentsline{toc}{chapterinfo}{%
+    \noexpand\numberline{}#1}%
+}
+\def\sectioninfo#1{%
+    \addcontentsline{toc}{sectioninfo}{%
+    \noexpand\numberline{}#1}%
+}
+\def\subsectioninfo#1{%
+    \addcontentsline{toc}{subsectioninfo}{%
+    \noexpand\numberline{}#1}%
+}
+\newcommand{\TOCProedrikoDiatagma}[2]{
+  \phantomsection
+  \addcontentsline{toc}{section}{Προεδρικό διάταγμα υπ' αριθμ. #1}
+
+  % \phantomsection
+  % \addcontentsline{toc}{subsectioninfo}{
+  %   \noexpand\numberline{}#2
+  % }
+}
+\newcommand{\TOCNomos}[2]{
+  \phantomsection
+  \addcontentsline{toc}{section}{ΝΟΜΟΣ ΥΠ' ΑΡΙΘ. #1}
+
+  % \phantomsection
+  % \addcontentsline{toc}{subsectioninfo}{
+  %   \noexpand\numberline{}#2
+  % }
+}
+\newcommand{\TOCArticle}[2]{
+  \phantomsection
+  \addcontentsline{toc}{subsection}{Άρθρο #1}
+
+  % \phantomsubsubsection
+  % \addcontentsline{toc}{subsubsectioninfo}{
+  %   \noexpand\numberline{}#2
+  % }
+}
+
+% Wste na allaksei to xrwma mono tou TOC se mabro
+% Deixnei xalia ena terastio pragma me entono kokkino xrwma
+\newcommand{\TOCprint}[0]{
+  \begingroup
+    \hypersetup{linkcolor=black}
+    \tableofcontents
+  \endgroup
+}
+
+\newcommand{\Nomos}[1]{
+        \selectlanguage{greek}
+        \begin{center}
+                \textbf{ΝΟΜΟΣ ΥΠ' ΑΡΙΘ. #1}
+        \end{center}
+}
+\newcommand{\ProedrikoDiatagma}[1]{
+        \selectlanguage{greek}
+        \begin{center}
+                \textbf{ΠΡΟΕΔΡΙΚΟ ΔΙΑΤΑΓΜΑ\\ΥΠ ΑΡΙΘΜ. #1}
+        \end{center}
+}
+% Praksi nomothetikou periexomenou
+\newcommand{\LegislativeAct}[1]{
+  \selectlanguage{greek}
+  \begin{center}
+    \textbf{Πράξη νομοθετικού περιεχομένου}
+  \end{center}
+  \ifthenelse{\equal{#1}{}}{}{
+    \textit{#1}
+  }
+}
+\newcommand{\PerilipsiNomou}[1]{
+        \textit{
+        #1}
+}
+\newcommand{\Ekdotis}[1]{
+        \begin{center}
+                \textbf{#1}
+        \end{center}
+}
+\newcommand{\Chapter}[2]{
+        \selectlanguage{greek}
+        \begin{center}
+                \textbf{Κεφαλαιο #1}
+                
+                \textbf{#2}
+        \end{center}
+}
+\newcommand{\Article}[2]{
+  \selectlanguage{greek}
+  \begin{center}
+    \textbf{Άρθρο #1}
+  \end{center}
+  \ifthenelse{\equal{#2}{}}{}{
+    \vspace{-5mm}
+    \begin{center}
+      \textit{#2}
+    \end{center}
+  }
+}
+\newcommand{\ArticleDescription}[1]{
+        \selectlanguage{greek}
+        \begin{center}
+                \textit{#1}
+        \end{center}
+}
+
+\newenvironment{BigQuote}
+        % Prin tin antikatastasi
+        {
+                \vspace{1mm}
+                \noindent\vhrulefill{3pt}
+                \vspace{1mm}
+                
+        }
+        % Meta tin antikatastasi
+        {
+
+                \vspace{1mm}
+                \noindent\vhrulefill{3pt}
+                \vspace{1mm}
+        }
+
+\newcommand{\DateSignature}[4]{
+  \selectlanguage{greek}
+  \begin{center}
+    \textbf{\printDate{#1}{#2}{#3}{#4}}
+  \end{center}
+}
+
+\newcommand{\PersonSignature}[2]{
+  \selectlanguage{greek}
+  \begin{center}
+    \begin{tiny}
+      #1\\
+    \end{tiny}
+    \textbf{#2}\\
+  \end{center}
+}
+
+\newcommand{\validated}[4]{
+  \selectlanguage{greek}
+  \noindent\begin{center}
+    \textit{Θεωρήθηκε και τέθηκε η Μεγάλη Σφραγίδα του Κράτους.} \\
+    \printDate{#1}{#2}{#3}{#4} 
+  \end{center}
+}
+
+
+\usepackage[unicode]{hyperref}
+\hypersetup{
+  colorlinks=true,
+  urlcolor=blue
+}
+
+\newcommand{\citeme}[7]{
+        % 1: Eidos
+        % 2: Arithmos protokolisis
+        % 3: Etos
+        % 4: Titlos
+        % 5: TiposFek
+        % 6: ArithmosFek
+        % 7: HmerominiaFek
+  \ifthenelse{\equal{#4}{}}
+    {\href{http://all-feks.gr/#7/#6/#5}{#1 #2/#3 (\uline{ΦΕΚ #5/#6/#7})}\ignorespaces}
+    {\href{http://all-feks.gr/#7/#6/#5}{#1 #2/#3 «\textit{#4}» (\uline{ΦΕΚ #5/#6/#7})}\ignorespaces}
+}
+\newcommand{\citemenolink}[7]{
+        % 1: Eidos
+        % 2: Arithmos protokolisis
+        % 3: Etos
+        % 4: Titlos
+        % 5: TiposFek
+        % 6: ArithmosFek
+        % 7: HmerominiaFek
+  \ifthenelse{\equal{#4}{}}
+    {#1 #2/#3 (ΦΕΚ #5/#6/#7)\ignorespaces}
+    {#1 #2/#3 «\textit{#4}» (ΦΕΚ #5/#6/#7)\ignorespaces}
+}
+\newcommand{\citeStateCouncil}[2]{
+        % 1: Etos
+        % 2: Arithmos
+        \href{http://all-state-council-decisions.gr/#2/#1}{#2/#1}\ignorespaces
+}
+
+
+\AtBeginDocument{
+    \maketitle
+    \renewcommand{\familydefault}{\sfdefault}
+    \normalfont             % this is required for the change to take effect    
+  }
+\AtEndDocument{
+    \printOfficialGazetteFooter
+  }
+
+\endinput
