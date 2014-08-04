@@ -255,6 +255,15 @@
     \addcontentsline{toc}{subsectioninfo}{%
     \noexpand\numberline{}#1}%
 }
+\newcommand{\TOCSection}[2]{
+  \phantomsection
+  \addcontentsline{toc}{section}{#1}
+
+  % \phantomsection
+  % \addcontentsline{toc}{subsectioninfo}{
+  %   \noexpand\numberline{}#2
+  % }
+}
 \newcommand{\TOCProedrikoDiatagma}[2]{
   \phantomsection
   \addcontentsline{toc}{section}{Προεδρικό διάταγμα υπ' αριθμ. #1}
@@ -292,6 +301,12 @@
   \endgroup
 }
 
+\newcommand{\BigTitle}[1]{
+        \selectlanguage{greek}
+        \begin{center}
+                \textbf{#1}
+        \end{center}
+}
 \newcommand{\Nomos}[1]{
         \selectlanguage{greek}
         \begin{center}
@@ -327,6 +342,22 @@
         \selectlanguage{greek}
         \begin{center}
                 \textbf{Κεφαλαιο #1}
+                
+                \textbf{#2}
+        \end{center}
+}
+\newcommand{\Section}[2]{
+        \selectlanguage{greek}
+        \begin{center}
+                \textbf{Τμήμα #1}
+                
+                \textbf{#2}
+        \end{center}
+}
+\newcommand{\Part}[2]{
+        \selectlanguage{greek}
+        \begin{center}
+                \textbf{#1}
                 
                 \textbf{#2}
         \end{center}
